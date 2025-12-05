@@ -1,0 +1,26 @@
+[Unit]
+Description=Security Monitor Service
+Documentation=https://github.com/yourusername/security-monitor
+After=network.target multi-user.target
+Wants=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/security-monitor
+ExecStart=/bin/bash /opt/security-monitor/src/monitor.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security
+ProtectSystem=strict
+ReadWritePaths=/tmp/security-photos /var/log/security-monitor /var/lib/security-monitor
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
